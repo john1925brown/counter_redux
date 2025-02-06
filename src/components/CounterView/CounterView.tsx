@@ -9,8 +9,6 @@ export const CounterView = () => {
   const counterValue = useAppSelector((state: RootState) => state.counter);
   const dispatch = useAppDispatch();
 
-  console.log(counterValue);
-
   const incValue = () => {
     dispatch(incValueAC());
   };
