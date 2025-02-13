@@ -2,17 +2,28 @@ import { useDispatch } from 'react-redux';
 import { useAppSelector } from '../../common/hooks/useAppSelector';
 import { Button } from '../Button/Button';
 import s from './counterConfig.module.css';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useEffect } from 'react';
 import {
   changeMaxValueAC,
   changeStartValueAC,
-} from '../../model/config_reducer';
+  incValueAC,
+} from '../../model/counter_reducer';
 
 export const CounterConfig = () => {
-  const startValue = useAppSelector((state) => state.config.startValue);
-  const maxValue = useAppSelector((state) => state.config.maxValue);
+  const startValue = useAppSelector((state) => state.counter.startValue);
+  const maxValue = useAppSelector((state) => state.counter.maxValue);
+  const counterValue = useAppSelector((state) => state.counter.value);
+  const error = useAppSelector((state) => state.error.error);
+  // Получил для динамичного изменения value при увеличении startValue
+  console.log(error);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (startValue > counterValue) {
+      dispatch(incValueAC());
+    }
+  }, [startValue]);
 
   const changeMaxValueHandler = (e: ChangeEvent<HTMLInputElement>) => {
     dispatch(changeMaxValueAC({ maxValue: +e.currentTarget.value }));
@@ -45,7 +56,7 @@ export const CounterConfig = () => {
         </div>
       </div>
       <div className={s.btn__container}>
-        <Button title="set" buttonCallback={() => {}} />
+        <Button title="set" buttonCallback={() => {}} isDisabled={error} />
       </div>
     </div>
   );
