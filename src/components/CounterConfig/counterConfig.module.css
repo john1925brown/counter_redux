@@ -1,0 +1,21 @@
+.configGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.inputGroup{
+
+}
+
+.input{
+
+}
+
+.input__desc{
+
+}
+
+.btn__container{
+
+}
